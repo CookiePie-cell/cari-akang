@@ -1,3 +1,4 @@
+import 'package:cari_akang/constants/constants.dart';
 import 'package:cari_akang/router_generator.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'CariAkang',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
+        primarySwatch: MainColors.palette,
         // fontFamily:
       ),
       initialRoute: '/',
