@@ -1,0 +1,1 @@
+enum StatusLaporan { Hilang, Ditemukan }
