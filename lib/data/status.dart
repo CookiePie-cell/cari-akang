@@ -1,1 +1,1 @@
-enum StatusLaporan { Hilang, Ditemukan }
+enum StatusLaporan { hilang, ditemukan }

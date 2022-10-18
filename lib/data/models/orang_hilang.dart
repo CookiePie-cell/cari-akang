@@ -16,7 +16,7 @@ class OrangHilang {
       required this.jenisKelamin,
       required this.tanggalPosting,
       this.umur,
-      this.statusLaporan = StatusLaporan.Hilang,
+      this.statusLaporan = StatusLaporan.hilang,
       this.alamat,
       this.keterangan});
 }

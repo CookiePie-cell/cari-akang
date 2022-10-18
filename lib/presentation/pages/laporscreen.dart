@@ -1,4 +1,7 @@
+import 'package:cari_akang/presentation/pages/laporsteps/ciri_ciri_step.dart';
 import 'package:cari_akang/presentation/pages/laporsteps/data_step.dart';
+import 'package:cari_akang/presentation/pages/laporsteps/keterangan_step.dart';
+import 'package:cari_akang/utils/helper.dart';
 import 'package:flutter/material.dart';
 
 class LaporScreen extends StatefulWidget {
@@ -13,54 +16,105 @@ class _LaporScreenState extends State<LaporScreen> {
 
   List<Step> get stepList => [
         Step(
-            title: const Text(
+            title: Text(
               'Data',
-              style: TextStyle(fontSize: 14.0),
+              style: TextStyle(
+                fontSize: Helper.getAdaptiveText(context, 13.0),
+              ),
             ),
             state: _currentStep > 0 ? StepState.complete : StepState.editing,
             isActive: _currentStep >= 0,
             content: const DataStep()),
         Step(
-            title: const Text(
+            title: Text(
               'Ciri-ciri',
-              style: TextStyle(fontSize: 14.0),
+              style: TextStyle(
+                fontSize: Helper.getAdaptiveText(context, 13.0),
+              ),
             ),
             state: _currentStep > 0 ? StepState.complete : StepState.editing,
             isActive: _currentStep > 0,
-            content: const Center(
-              child: Text('Hello'),
-            )),
+            content: const CiriCiriStep()),
         Step(
-            title: const Text(
-              'Kontak',
-              style: TextStyle(fontSize: 14.0),
+            title: Text(
+              'Keterangan',
+              style: TextStyle(
+                fontSize: Helper.getAdaptiveText(context, 13.0),
+              ),
             ),
-            state: _currentStep > 0 ? StepState.complete : StepState.editing,
+            state: _currentStep > 1 ? StepState.complete : StepState.editing,
             isActive: _currentStep > 1,
-            content: const Center(
-              child: Text('Hello'),
-            )),
+            content: const KeteranganStep()),
       ];
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        leading: IconButton(
-          color: Colors.white,
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text('Lapor',
-            style: TextStyle(fontSize: 26.0, color: Colors.white, shadows: [
-              Shadow(
-                  blurRadius: 6.0,
-                  color: Colors.black45,
-                  offset: Offset(0.0, 0.0))
-            ])),
+        // leading: IconButton(
+        //   color: Colors.white,
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
+        title: Text('Lapor',
+            style: TextStyle(
+                fontSize: Helper.getAdaptiveText(context, 25.0),
+                color: Colors.white,
+                shadows: const [
+                  Shadow(
+                      blurRadius: 6.0,
+                      color: Colors.black45,
+                      offset: Offset(0.0, 0.0))
+                ])),
       ),
       body: Stepper(
+        controlsBuilder: (BuildContext context, ControlsDetails controls) {
+          return Container(
+            margin: const EdgeInsets.only(top: 40.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                    onPressed: controls.onStepCancel,
+                    child: _currentStep > 0
+                        ? Text(
+                            "Kembali",
+                            style: TextStyle(
+                              fontSize: Helper.getAdaptiveText(context, 13.0),
+                            ),
+                          )
+                        : Container()),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0))),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.greenAccent[700]),
+                      minimumSize: MaterialStateProperty.all(
+                          Size(size.width * 0.25, size.height * 0.05)),
+                      elevation: MaterialStateProperty.all(8.0)),
+                  child: _currentStep < 2
+                      ? Text('Lanjut',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Helper.getAdaptiveText(context, 13.0),
+                          ))
+                      : Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Helper.getAdaptiveText(context, 13.0),
+                          ),
+                        ),
+                )
+              ],
+            ),
+          );
+        },
         type: StepperType.horizontal,
         steps: stepList,
         currentStep: _currentStep,
@@ -68,6 +122,13 @@ class _LaporScreenState extends State<LaporScreen> {
           setState(() {
             _currentStep = index;
           });
+        },
+        onStepCancel: () {
+          if (_currentStep != 0) {
+            setState(() {
+              _currentStep--;
+            });
+          }
         },
       ),
     );

@@ -1,9 +1,8 @@
 import 'package:cari_akang/data/gender.dart';
 import 'package:cari_akang/presentation/widgets/labeled_radio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cari_akang/utils/helper.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class DataStep extends StatefulWidget {
   const DataStep({super.key});
@@ -13,6 +12,28 @@ class DataStep extends StatefulWidget {
 }
 
 class _DataStepState extends State<DataStep> {
+  final List<String> provinsi = [
+    'A_Item1',
+    'A_Item2',
+    'A_Item3',
+    'A_Item4',
+    'B_Item1',
+    'B_Item2',
+    'B_Item3',
+    'B_Item4',
+  ];
+  final List<String> kota = [
+    'A_Item1',
+    'A_Item2',
+    'A_Item3',
+    'A_Item4',
+    'B_Item1',
+    'B_Item2',
+    'B_Item3',
+    'B_Item4',
+  ];
+
+  String? _selectedProvinsi, _selectedKota, _selectedTahunBulan = 'Tahun';
   Gender? _gender = Gender.laki_laki;
 
   @override
@@ -28,12 +49,15 @@ class _DataStepState extends State<DataStep> {
             decoration: BoxDecoration(
                 color: Colors.greenAccent[700],
                 borderRadius: BorderRadius.circular(4.0)),
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
                   'Isi Data',
-                  style: TextStyle(color: Colors.white, fontSize: 16.0),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Helper.getAdaptiveText(context, 15.0),
+                  ),
                 ),
               ),
             ),
@@ -45,7 +69,9 @@ class _DataStepState extends State<DataStep> {
         _buildText('Nama pelapor'),
         Form(
           child: TextFormField(
-            style: const TextStyle(fontSize: 14.0),
+            style: TextStyle(
+              fontSize: Helper.getAdaptiveText(context, 13.0),
+            ),
             decoration: const InputDecoration(
                 // labelStyle: TextStyle(fontSize: 16.0),
                 // labelText: 'Nama pelapor',
@@ -59,11 +85,13 @@ class _DataStepState extends State<DataStep> {
         _buildText('Nama korban'),
         Form(
           child: TextFormField(
-            style: const TextStyle(fontSize: 14.0),
+            style: TextStyle(
+              fontSize: Helper.getAdaptiveText(context, 13.0),
+            ),
             decoration: const InputDecoration(
                 // labelStyle: TextStyle(fontSize: 16.0),
                 // labelText: 'Nama pelapor',
-                hintText: 'Masukkan nama korban hilang',
+                hintText: 'Masukkan nama',
                 border: OutlineInputBorder()),
           ),
         ),
@@ -71,29 +99,69 @@ class _DataStepState extends State<DataStep> {
           height: 18.0,
         ),
         _buildText('Umur'),
-        Form(
-          child: TextFormField(
-            style: const TextStyle(fontSize: 14.0),
-            decoration: const InputDecoration(
-                // labelStyle: TextStyle(fontSize: 16.0),
-                // labelText: 'Nama pelapor',
-                hintText: 'Masukkan umur korban hilang',
-                border: OutlineInputBorder()),
-          ),
-        ),
-        const SizedBox(
-          height: 18.0,
-        ),
-        _buildText('Alamat'),
-        Form(
-          child: TextFormField(
-            style: const TextStyle(fontSize: 14.0),
-            decoration: const InputDecoration(
-                // labelStyle: TextStyle(fontSize: 16.0),
-                // labelText: 'Nama pelapor',
-                hintText: 'Masukkan alamat korban',
-                border: OutlineInputBorder()),
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 240,
+              child: Form(
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(
+                    fontSize: Helper.getAdaptiveText(context, 13.0),
+                  ),
+                  decoration: const InputDecoration(
+                      // labelStyle: TextStyle(fontSize: 16.0),
+                      // labelText: 'Nama pelapor',
+                      hintText: 'Masukkan umur',
+                      border: OutlineInputBorder()),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 100,
+              child: Form(
+                child: DropdownButtonFormField2(
+                  value: _selectedTahunBulan,
+                  decoration: const InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.zero,
+                    border: OutlineInputBorder(),
+                  ),
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.black45,
+                  ),
+                  iconSize: 30,
+                  buttonHeight: 60,
+                  buttonPadding: const EdgeInsets.only(left: 12.0, right: 10.0),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  items: ['Tahun', 'Bulan']
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: TextStyle(
+                                fontSize: Helper.getAdaptiveText(context, 13.0),
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedTahunBulan = value.toString();
+                    });
+                  },
+                  onSaved: (value) {
+                    _selectedTahunBulan = value.toString();
+                  },
+                ),
+              ),
+            )
+          ],
         ),
         const SizedBox(
           height: 18.0,
@@ -124,7 +192,127 @@ class _DataStepState extends State<DataStep> {
                   // widget.genderValueCallback(newGender);
                 })
           ],
-        )
+        ),
+        const SizedBox(
+          height: 18.0,
+        ),
+        Container(
+          width: double.infinity,
+          // height: 23.0,
+          decoration: BoxDecoration(
+              color: Colors.greenAccent[700],
+              borderRadius: BorderRadius.circular(4.0)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Text(
+                'Alamat',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: Helper.getAdaptiveText(context, 15.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 18.0,
+        ),
+        _buildText('Provinsi'),
+        Form(
+          child: DropdownButtonFormField2(
+            decoration: const InputDecoration(
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
+              border: OutlineInputBorder(),
+            ),
+            isExpanded: true,
+            hint: Text(
+              'Pilih provinsi:',
+              style: TextStyle(
+                fontSize: Helper.getAdaptiveText(context, 13.0),
+              ),
+            ),
+            icon: const Icon(
+              Icons.arrow_drop_down,
+              color: Colors.black45,
+            ),
+            iconSize: 30,
+            buttonHeight: 60,
+            buttonPadding: const EdgeInsets.only(left: 12.0, right: 10.0),
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            items: provinsi
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: TextStyle(
+                          fontSize: Helper.getAdaptiveText(context, 13.0),
+                        ),
+                      ),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                _selectedProvinsi = value.toString();
+              });
+            },
+            onSaved: (value) {
+              _selectedProvinsi = value.toString();
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 18.0,
+        ),
+        _buildText('Kota/Kabupaten'),
+        Form(
+          child: DropdownButtonFormField2(
+            decoration: const InputDecoration(
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
+              border: OutlineInputBorder(),
+            ),
+            isExpanded: true,
+            hint: Text(
+              'Pilih kota/kabupaten:',
+              style: TextStyle(
+                fontSize: Helper.getAdaptiveText(context, 13.0),
+              ),
+            ),
+            icon: const Icon(
+              Icons.arrow_drop_down,
+              color: Colors.black45,
+            ),
+            iconSize: 30,
+            buttonHeight: 60,
+            buttonPadding: const EdgeInsets.only(left: 12.0, right: 10.0),
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            items: kota
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: TextStyle(
+                          fontSize: Helper.getAdaptiveText(context, 13.0),
+                        ),
+                      ),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                _selectedProvinsi = value.toString();
+              });
+            },
+            onSaved: (value) {
+              _selectedProvinsi = value.toString();
+            },
+          ),
+        ),
       ],
     );
   }

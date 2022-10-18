@@ -65,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
                     iconSize: 35,
                     color: Colors.white,
-                    onPressed: () => {},
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/notifications'),
                   ),
                 ],
               ),

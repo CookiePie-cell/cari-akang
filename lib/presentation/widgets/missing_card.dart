@@ -1,8 +1,7 @@
-import 'package:cari_akang/data/gender.dart';
 import 'package:flutter/material.dart';
 
 class MissingCard extends StatelessWidget {
-  const MissingCard({Key? key});
+  const MissingCard({Key? key}) : super(key: key);
   // const MissingCard(
   //     {Key? key,
   //     required this.id,
@@ -24,7 +23,9 @@ class MissingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, '/details');
+      },
       child: Card(
         elevation: 5.0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
