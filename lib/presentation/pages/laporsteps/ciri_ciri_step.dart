@@ -1,6 +1,10 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:cari_akang/utils/helper.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CiriCiriStep extends StatefulWidget {
   const CiriCiriStep({super.key});
@@ -27,6 +31,10 @@ class _CiriCiriStepState extends State<CiriCiriStep> {
   ];
 
   String? _selectedItem;
+
+  XFile? _imageFile;
+
+  dynamic _pickImageError;
 
   @override
   Widget build(BuildContext context) {
@@ -222,6 +230,63 @@ class _CiriCiriStepState extends State<CiriCiriStep> {
             ),
           ),
         ),
+        const SizedBox(
+          height: 18.0,
+        ),
+        Container(
+          width: double.infinity,
+          // height: 23.0,
+          decoration: BoxDecoration(
+              color: Colors.greenAccent[700],
+              borderRadius: BorderRadius.circular(4.0)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Text(
+                'Foto Teman/Kerabat yang Hilang',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: Helper.getAdaptiveText(context, 15.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 18.0,
+        ),
+        Center(
+          child: Column(
+            children: [
+              _imageFile == null
+                  ? Container(
+                      height: 180,
+                      width: 130,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black54)),
+                      child: const Center(
+                        child: Icon(Icons.add, color: Colors.black54),
+                      ),
+                    )
+                  : Image.file(
+                      File(_imageFile!.path),
+                      width: 130,
+                      height: 180,
+                      fit: BoxFit.cover,
+                    ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text(
+                  'Pilih foto',
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -233,4 +298,17 @@ class _CiriCiriStepState extends State<CiriCiriStep> {
               fontWeight: FontWeight.w500,
             )),
       );
+
+  Future<void> _pickImage() async {
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _imageFile = image!;
+      });
+    } catch (e) {
+      log('error');
+    }
+  }
 }

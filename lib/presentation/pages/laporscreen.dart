@@ -1,12 +1,18 @@
+import 'dart:developer';
+
+import 'package:cari_akang/data/models/arguments.dart';
 import 'package:cari_akang/presentation/pages/laporsteps/ciri_ciri_step.dart';
 import 'package:cari_akang/presentation/pages/laporsteps/data_step.dart';
 import 'package:cari_akang/presentation/pages/laporsteps/keterangan_step.dart';
+import 'package:cari_akang/presentation/widgets/alert_dialog.dart';
 import 'package:cari_akang/utils/helper.dart';
 import 'package:flutter/material.dart';
 
 class LaporScreen extends StatefulWidget {
-  const LaporScreen({Key? key}) : super(key: key);
+  const LaporScreen({required this.isAuthenticated, Key? key})
+      : super(key: key);
 
+  final bool isAuthenticated;
   @override
   State<LaporScreen> createState() => _LaporScreenState();
 }
@@ -48,26 +54,44 @@ class _LaporScreenState extends State<LaporScreen> {
       ];
 
   @override
+  void initState() {
+    super.initState();
+    if (!widget.isAuthenticated) {
+      Future.delayed(
+          const Duration(milliseconds: 0),
+          () => showDialog(
+              context: context,
+              builder: (context) => MasukAlert(
+                    onCancelPressed: () => Navigator.pushNamed(context, '/home',
+                        arguments: ScreenArguments(isAuthenticated: false)),
+                  )));
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
         // leading: IconButton(
         //   color: Colors.white,
         //   icon: const Icon(Icons.arrow_back),
         //   onPressed: () => Navigator.pop(context),
         // ),
-        title: Text('Lapor',
-            style: TextStyle(
-                fontSize: Helper.getAdaptiveText(context, 25.0),
-                color: Colors.white,
-                shadows: const [
-                  Shadow(
-                      blurRadius: 6.0,
-                      color: Colors.black45,
-                      offset: Offset(0.0, 0.0))
-                ])),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Text('Lapor',
+              style: TextStyle(
+                  fontSize: Helper.getAdaptiveText(context, 25.0),
+                  color: Colors.white,
+                  shadows: const [
+                    Shadow(
+                        blurRadius: 6.0,
+                        color: Colors.black45,
+                        offset: Offset(0.0, 0.0))
+                  ])),
+        ),
       ),
       body: Stepper(
         controlsBuilder: (BuildContext context, ControlsDetails controls) {
@@ -88,7 +112,7 @@ class _LaporScreenState extends State<LaporScreen> {
                           )
                         : Container()),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: controls.onStepContinue,
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0))),
@@ -122,6 +146,17 @@ class _LaporScreenState extends State<LaporScreen> {
           setState(() {
             _currentStep = index;
           });
+        },
+        onStepContinue: () {
+          if (_currentStep < stepList.length - 1) {
+            setState(() {
+              _currentStep++;
+            });
+          } else {
+            Navigator.pushNamed(context, '/home',
+                arguments:
+                    ScreenArguments(isAuthenticated: widget.isAuthenticated));
+          }
         },
         onStepCancel: () {
           if (_currentStep != 0) {

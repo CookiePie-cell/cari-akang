@@ -1,13 +1,13 @@
-import 'dart:developer';
-
 import 'package:cari_akang/data/models/orang_hilang.dart';
-import 'package:cari_akang/data/status.dart';
+import 'package:cari_akang/presentation/widgets/alert_dialog.dart';
 import 'package:cari_akang/presentation/widgets/missing_card.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({required this.isAuthenticated, Key? key}) : super(key: key);
+
+  final bool isAuthenticated;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
+    // log(widget.isAuthenticated.toString());
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -64,14 +65,19 @@ class _HomeScreenState extends State<HomeScreen>
                         fontWeight: FontWeight.bold),
                   ),
                   IconButton(
-                    icon: const Icon(
-                      Icons.notifications_none_rounded,
-                    ),
-                    iconSize: 35,
-                    color: Colors.white,
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/notifications'),
-                  ),
+                      icon: const Icon(
+                        Icons.notifications_none_rounded,
+                      ),
+                      iconSize: 35,
+                      color: Colors.white,
+                      onPressed: () {
+                        widget.isAuthenticated
+                            ? Navigator.pushNamed(context, '/notifications',
+                                arguments: widget.isAuthenticated)
+                            : showDialog<String>(
+                                context: context,
+                                builder: (context) => const MasukAlert());
+                      }),
                 ],
               ),
             ),
@@ -192,6 +198,7 @@ class _HomeScreenState extends State<HomeScreen>
                         viewportFraction: 1,
                         children: [
                           ListView.builder(
+                            padding: EdgeInsets.zero,
                             itemCount: missings.length,
                             itemBuilder: (context, index) {
                               return MissingCard(
@@ -200,8 +207,9 @@ class _HomeScreenState extends State<HomeScreen>
                                 namaPelapor: missings[index].namaPelapor,
                                 umur: missings[index].umur!,
                                 jenisKelamin: missings[index].jenisKelamin,
-                                onTap: () =>
-                                    Navigator.pushNamed(context, '/details'),
+                                onTap: () => Navigator.pushNamed(
+                                    context, '/details',
+                                    arguments: widget.isAuthenticated),
                                 imgURL: missings[index].imgUrl,
                                 tanggalPosting: missings[index].tanggalPosting,
                                 statusLaporan: missings[index].statusLaporan,
@@ -217,8 +225,9 @@ class _HomeScreenState extends State<HomeScreen>
                                 namaPelapor: found[index].namaPelapor,
                                 umur: found[index].umur!,
                                 jenisKelamin: found[index].jenisKelamin,
-                                onTap: () =>
-                                    Navigator.pushNamed(context, '/details'),
+                                onTap: () => Navigator.pushNamed(
+                                    context, '/details',
+                                    arguments: widget.isAuthenticated),
                                 imgURL: found[index].imgUrl,
                                 tanggalPosting: found[index].tanggalPosting,
                                 statusLaporan: found[index].statusLaporan,

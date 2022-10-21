@@ -39,6 +39,8 @@ dependencies:
   dropdown_button2: ^1.8.5
   font_awesome_flutter: ^9.2.0
   google_fonts: ^2.3.1
+  image_picker: ^0.8.6
+  url_launcher: any
 
 dev_dependencies:
   flutter_test:

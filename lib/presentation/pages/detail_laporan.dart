@@ -1,12 +1,19 @@
+import 'dart:developer';
+
+import 'package:cari_akang/data/models/arguments.dart';
 import 'package:cari_akang/presentation/pages/detailsteps/detail_ciriciri_step.dart';
 import 'package:cari_akang/presentation/pages/detailsteps/detail_data_step.dart';
 import 'package:cari_akang/presentation/pages/detailsteps/detail_keterangan_step.dart';
+import 'package:cari_akang/presentation/widgets/alert_dialog.dart';
 import 'package:cari_akang/utils/helper.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailLaporanScreen extends StatefulWidget {
-  const DetailLaporanScreen({Key? key}) : super(key: key);
+  const DetailLaporanScreen({required this.isAuthenticated, Key? key})
+      : super(key: key);
 
+  final bool isAuthenticated;
   @override
   State<DetailLaporanScreen> createState() => _DetailLaporanScreenState();
 }
@@ -14,6 +21,13 @@ class DetailLaporanScreen extends StatefulWidget {
 class _DetailLaporanScreenState extends State<DetailLaporanScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
+  final List<String> report = [
+    'SARA',
+    'Konten palsu',
+    'Pencemaran nama baik',
+    'lainnya'
+  ];
 
   int _currentStep = 0;
 
@@ -93,8 +107,10 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
                         Row(
                           children: [
                             IconButton(
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, '/'),
+                              onPressed: () => Navigator.pushNamed(
+                                  context, '/home',
+                                  arguments: ScreenArguments(
+                                      isAuthenticated: widget.isAuthenticated)),
                               icon: const Icon(
                                 Icons.arrow_back,
                                 color: Colors.white,
@@ -116,7 +132,14 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
                           ),
                           iconSize: 35,
                           color: Colors.white,
-                          onPressed: () => {},
+                          onPressed: () {
+                            widget.isAuthenticated
+                                ? Navigator.pushNamed(context, '/notifications',
+                                    arguments: widget.isAuthenticated)
+                                : showDialog<String>(
+                                    context: context,
+                                    builder: (context) => const MasukAlert());
+                          },
                         ),
                       ],
                     ),
@@ -176,7 +199,12 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () => widget.isAuthenticated
+                                    ? Navigator.pushNamed(context, '/chat')
+                                    : showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            const MasukAlert()),
                                 icon: Icon(
                                   Icons.message,
                                   color: Colors.greenAccent[700],
@@ -184,29 +212,46 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
                                 ),
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  const noHp = '081234567891';
+                                  final url = Uri.parse('tel:$noHp');
+
+                                  if (await canLaunchUrl(url)) {
+                                    await launchUrl(url);
+                                  }
+                                },
                                 icon: Icon(
                                   Icons.phone,
                                   color: Colors.greenAccent[700],
                                   size: 30.0,
                                 ),
                               ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.bookmark_add,
-                                  color: Colors.greenAccent[700],
-                                  size: 30.0,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
+                              // IconButton(
+                              //   onPressed: () {},
+                              //   icon: Icon(
+                              //     Icons.bookmark_add,
+                              //     color: Colors.greenAccent[700],
+                              //     size: 30.0,
+                              //   ),
+                              // ),
+                              PopupMenuButton<String>(
+                                onSelected: (value) {
+                                  log('Laporan berhasil dikirimm: $value');
+                                },
                                 icon: Icon(
                                   Icons.report_gmailerrorred,
                                   color: Colors.greenAccent[700],
                                   size: 30.0,
                                 ),
-                              ),
+                                itemBuilder: (context) => report
+                                    .map<PopupMenuEntry<String>>(
+                                        (String value) {
+                                  return PopupMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              )
                             ],
                           ),
                           Stepper(
@@ -236,3 +281,23 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
         ));
   }
 }
+
+
+// DropdownButton<String>(
+//                                 icon: Icon(
+//                                   Icons.report_gmailerrorred,
+//                                   color: Colors.greenAccent[700],
+//                                   size: 30.0,
+//                                 ),
+//                                 underline: Container(),
+//                                 onChanged: (value) {
+//                                   log('Laporan berhasil dikirim');
+//                                 },
+//                                 items: report.map<DropdownMenuItem<String>>(
+//                                     (String value) {
+//                                   return DropdownMenuItem<String>(
+//                                     value: value,
+//                                     child: Text(value),
+//                                   );
+//                                 }).toList(),
+//                               ),

@@ -1,4 +1,4 @@
-import 'package:cari_akang/main.dart';
+import 'package:cari_akang/data/models/arguments.dart';
 import 'package:cari_akang/navigation.dart';
 import 'package:cari_akang/presentation/pages/lupa_password.dart';
 import 'package:cari_akang/presentation/pages/detail_laporan.dart';
@@ -10,15 +10,22 @@ import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // final args = settings.arguments;
+    final args = settings.arguments;
 
     switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (_) => const MyApp());
+      case '/home':
+        return MaterialPageRoute(
+            builder: (_) => NavigationPage(
+                  arguments: args as ScreenArguments,
+                ));
       case '/details':
-        return MaterialPageRoute(builder: (_) => const DetailLaporanScreen());
+        return MaterialPageRoute(
+            builder: (_) => DetailLaporanScreen(isAuthenticated: args as bool));
       case '/notifications':
-        return MaterialPageRoute(builder: (_) => const NotificationScreen());
+        return MaterialPageRoute(
+            builder: (_) => NotificationScreen(
+                  isAuthenticated: args as bool,
+                ));
       case '/chat':
         return MaterialPageRoute(builder: (_) => const ChatRoomView());
       case '/register':

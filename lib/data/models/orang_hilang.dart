@@ -31,7 +31,7 @@ final missings = [
       jenisKelamin: Gender.perempuan,
       tanggalPosting: "15 Oktober 2022",
       imgUrl:
-          "https://il6.picdn.net/shutterstock/videos/2277788/thumb/1.jpg?i10c=img.resize(height:72)",
+          "https://media.istockphoto.com/photos/carefree-beautiful-latin-woman-relaxing-on-beach-picture-id1369510216",
       umur: 23),
   OrangHilang(
       id: "2",
@@ -39,7 +39,8 @@ final missings = [
       nama: "Dariana King",
       jenisKelamin: Gender.perempuan,
       tanggalPosting: "30 Agustus 2022",
-      imgUrl: "https://ak.picdn.net/shutterstock/videos/15671722/thumb/1.jpg",
+      imgUrl:
+          "https://media.istockphoto.com/photos/caucasian-woman-enjoying-at-beach-picture-id1262310682",
       umur: 20),
   OrangHilang(
       id: "3",

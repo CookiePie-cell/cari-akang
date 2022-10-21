@@ -1,3 +1,4 @@
+import 'package:cari_akang/data/models/arguments.dart';
 import 'package:flutter/material.dart';
 import '../widgets/password_input_field.dart';
 import '../widgets/rounded_button.dart';
@@ -11,6 +12,19 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(172, 8, 241, 0),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pushNamed(context, '/home',
+              arguments: ScreenArguments(isAuthenticated: false)),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: 34.0,
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +66,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 RoundedButton(
                   buttonName: 'Login',
-                  onButtonPressed: () => Navigator.pushNamed(context, '/'),
+                  onButtonPressed: () => Navigator.pushNamed(context, '/home',
+                      arguments: ScreenArguments(isAuthenticated: true)),
                 ),
                 const SizedBox(
                   height: 25,
@@ -72,7 +87,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 50,
             ),
           ],
         ),

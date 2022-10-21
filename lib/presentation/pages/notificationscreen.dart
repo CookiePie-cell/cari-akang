@@ -1,11 +1,14 @@
+import 'package:cari_akang/data/models/arguments.dart';
 import 'package:cari_akang/data/models/notification.dart';
 import 'package:cari_akang/presentation/widgets/notification_item.dart';
 import 'package:cari_akang/utils/helper.dart';
 import 'package:flutter/material.dart';
 
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
+  const NotificationScreen({required this.isAuthenticated, Key? key})
+      : super(key: key);
 
+  final bool isAuthenticated;
   @override
   State<NotificationScreen> createState() => _NotificationScreenState();
 }
@@ -67,7 +70,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     subtitle: notifications[index].subtitle,
                     date: notifications[index].date,
                     isMessage: false,
-                    onTap: () => Navigator.pushNamed(context, '/details'),
+                    onTap: () => Navigator.pushNamed(context, '/details',
+                        arguments: widget.isAuthenticated),
                   ),
                 )),
             Padding(

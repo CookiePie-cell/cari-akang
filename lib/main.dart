@@ -1,4 +1,5 @@
 import 'package:cari_akang/constants/constants.dart';
+import 'package:cari_akang/data/models/arguments.dart';
 import 'package:cari_akang/router_generator.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
-      home: const NavigationPage(),
+      home: NavigationPage(
+        arguments: ScreenArguments(isAuthenticated: false),
+      ),
     );
   }
 }

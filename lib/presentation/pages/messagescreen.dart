@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -188,7 +187,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
     log(bottomOffset.toString());
     _scrollController.animateTo(
       bottomOffset,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
   }

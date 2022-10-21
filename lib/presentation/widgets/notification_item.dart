@@ -26,8 +26,8 @@ class NotificationItem extends StatelessWidget {
           isThreeLine: isMessage ? false : true,
           leading: const CircleAvatar(
             radius: 30,
-            backgroundImage:
-                AssetImage('assets/images/Komik-One-Piece-small.png'),
+            backgroundImage: NetworkImage(
+                'https://akcdn.detik.net.id/community/media/visual/2022/04/01/manga-one-piece_43.webp?w=700&q=90'),
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

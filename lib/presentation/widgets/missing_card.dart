@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cari_akang/data/gender.dart';
 import 'package:cari_akang/data/status.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +32,11 @@ class MissingCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        elevation: 5.0,
+        elevation: 1.0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: SizedBox(
           // width: 180,
-          height: 150,
+          height: 200,
           child: Stack(children: [
             Padding(
               padding:
@@ -46,10 +44,11 @@ class MissingCard extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    width: 100,
-                    height: 150,
+                    width: 130,
+                    height: 180,
                     color: Colors.black,
-                    child: Image(image: NetworkImage(imgURL), fit: BoxFit.fill),
+                    child:
+                        Image(image: NetworkImage(imgURL), fit: BoxFit.cover),
                   ),
                   Expanded(
                     child: Padding(
@@ -121,13 +120,27 @@ class MissingCard extends StatelessWidget {
           width: 4.0,
         ),
         Flexible(
-          child: Text(
-            value,
-            // softWrap: true,
-            // overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: const TextStyle(
-                fontFamily: 'Segoe UI', fontSize: 14.0, color: Colors.black54),
+          child: Container(
+            color: key == 'Status'
+                ? statusLaporan == StatusLaporan.hilang
+                    ? Colors.red
+                    : Colors.greenAccent[700]
+                : null,
+            child: Padding(
+              padding: key == 'Status'
+                  ? const EdgeInsets.symmetric(horizontal: 8.0)
+                  : EdgeInsets.symmetric(horizontal: 0.0),
+              child: Text(
+                value,
+                // softWrap: true,
+                // overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: TextStyle(
+                    fontFamily: 'Segoe UI',
+                    fontSize: 14.0,
+                    color: key == 'Status' ? Colors.white : Colors.black54),
+              ),
+            ),
           ),
         ),
       ],
