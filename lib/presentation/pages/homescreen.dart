@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:cari_akang/data/models/orang_hilang.dart';
+import 'package:cari_akang/data/status.dart';
 import 'package:cari_akang/presentation/widgets/missing_card.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -187,34 +191,39 @@ class _HomeScreenState extends State<HomeScreen>
                         controller: _tabController,
                         viewportFraction: 1,
                         children: [
-                          ListView(
-                            padding: EdgeInsets.zero,
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                                child: MissingCard(),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                                child: MissingCard(),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                                child: MissingCard(),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                                child: MissingCard(),
-                              ),
-                            ],
+                          ListView.builder(
+                            itemCount: missings.length,
+                            itemBuilder: (context, index) {
+                              return MissingCard(
+                                id: missings[index].id,
+                                nama: missings[index].nama,
+                                namaPelapor: missings[index].namaPelapor,
+                                umur: missings[index].umur!,
+                                jenisKelamin: missings[index].jenisKelamin,
+                                onTap: () =>
+                                    Navigator.pushNamed(context, '/details'),
+                                imgURL: missings[index].imgUrl,
+                                tanggalPosting: missings[index].tanggalPosting,
+                                statusLaporan: missings[index].statusLaporan,
+                              );
+                            },
                           ),
-                          ListView(
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                                child: MissingCard(),
-                              ),
-                            ],
+                          ListView.builder(
+                            itemCount: found.length,
+                            itemBuilder: (context, index) {
+                              return MissingCard(
+                                id: found[index].id,
+                                nama: found[index].nama,
+                                namaPelapor: found[index].namaPelapor,
+                                umur: found[index].umur!,
+                                jenisKelamin: found[index].jenisKelamin,
+                                onTap: () =>
+                                    Navigator.pushNamed(context, '/details'),
+                                imgURL: found[index].imgUrl,
+                                tanggalPosting: found[index].tanggalPosting,
+                                statusLaporan: found[index].statusLaporan,
+                              );
+                            },
                           ),
                         ],
                       ),

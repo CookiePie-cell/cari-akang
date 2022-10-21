@@ -13,6 +13,7 @@ class ProfilScreen extends StatefulWidget {
 class _ProfilScreenState extends State<ProfilScreen>
     with SingleTickerProviderStateMixin {
   bool _isEdit = false;
+  bool _isLogin = true;
 
   @override
   void initState() {
@@ -107,12 +108,22 @@ class _ProfilScreenState extends State<ProfilScreen>
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              setState(() {
-                                _isEdit = !_isEdit;
-                              });
+                              log(_isLogin.toString());
+                              _isLogin
+                                  ? setState(() {
+                                      _isEdit = !_isEdit;
+                                    })
+                                  : setState(() {
+                                      _isLogin = !_isLogin;
+                                      Navigator.pushNamed(context, '/login');
+                                    });
                             },
                             child: Text(
-                              _isEdit ? 'Simpan' : 'Edit Profile',
+                              _isLogin
+                                  ? _isEdit
+                                      ? 'Simpan'
+                                      : 'Edit Profile'
+                                  : 'Masuk',
                               style: TextStyle(
                                   fontSize:
                                       Helper.getAdaptiveText(context, 14.0),

@@ -20,3 +20,14 @@ final notifications = [
       subtitle: 'Bantu Sir Alex Ferguson mencari kerabatnya yang hilang.',
       date: '9 Oktober 2022 10:30'),
 ];
+
+final messages = [
+  const Notification(
+      title: 'Christiano Ronaldo',
+      subtitle: 'Selamat Pagi alsdnaksjdb asjd kjasdb asbd jabsjkd..',
+      date: '17 Oktober 2022 10:30'),
+  const Notification(
+      title: 'Lionel Messi',
+      subtitle: 'Saya ketemu Mbappe di jalan pak',
+      date: '12 Oktober 2022 14:24'),
+];

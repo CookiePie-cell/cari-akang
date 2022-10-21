@@ -15,7 +15,7 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  int _currentStep = 1;
+  int _currentStep = 0;
 
   List<Step> get stepList => [
         Step(
@@ -86,17 +86,29 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: 16.0, left: 20.0, right: 20.0),
+                    padding: const EdgeInsets.only(top: 16.0, right: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'CariAkang',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 34.0,
-                              fontWeight: FontWeight.bold),
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/'),
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                                size: 24.0,
+                              ),
+                            ),
+                            const Text(
+                              'CariAkang',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 34.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                         IconButton(
                           icon: const Icon(

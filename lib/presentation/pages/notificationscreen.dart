@@ -63,18 +63,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child: ListView.builder(
                   itemCount: notifications.length,
                   itemBuilder: (context, index) => NotificationItem(
-                      title: notifications[index].title,
-                      subtitle: notifications[index].subtitle,
-                      date: notifications[index].date),
+                    title: notifications[index].title,
+                    subtitle: notifications[index].subtitle,
+                    date: notifications[index].date,
+                    isMessage: false,
+                    onTap: () => Navigator.pushNamed(context, '/details'),
+                  ),
                 )),
             Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.builder(
                   itemCount: notifications.length - 1,
                   itemBuilder: (context, index) => NotificationItem(
-                      title: notifications[index].title,
-                      subtitle: notifications[index].subtitle,
-                      date: notifications[index].date),
+                    title: messages[index].title,
+                    subtitle: messages[index].subtitle,
+                    date: messages[index].date,
+                    isMessage: true,
+                    onTap: () => Navigator.pushNamed(context, '/chat'),
+                  ),
                 )),
           ],
         ),

@@ -2,6 +2,8 @@ import 'package:cari_akang/presentation/widgets/missing_card.dart';
 import 'package:cari_akang/utils/helper.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/models/orang_hilang.dart';
+
 class BookmarkScreen extends StatefulWidget {
   const BookmarkScreen({Key? key}) : super(key: key);
 
@@ -88,26 +90,20 @@ class _BookmarkScreenState extends State<BookmarkScreen>
                       height: 18.0,
                     ),
                     Expanded(
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.0),
-                            child: MissingCard(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.0),
-                            child: MissingCard(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.0),
-                            child: MissingCard(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.0),
-                            child: MissingCard(),
-                          ),
-                        ],
+                      child: ListView.builder(
+                        itemCount: missings.length - 2,
+                        itemBuilder: (context, index) {
+                          return MissingCard(
+                              id: missings[index].id,
+                              nama: missings[index].nama,
+                              namaPelapor: missings[index].namaPelapor,
+                              umur: missings[index].umur!,
+                              jenisKelamin: missings[index].jenisKelamin,
+                              onTap: () =>
+                                  Navigator.pushNamed(context, '/details'),
+                              imgURL: missings[index].imgUrl,
+                              tanggalPosting: missings[index].tanggalPosting);
+                        },
                       ),
                     ),
                   ],
