@@ -19,7 +19,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _controller = TextEditingController();
-  List<OrangHilangDetail> data = [...orangHilangDetail];
+  List<OrangHilangDetail> data = [...orangHilangDetail, ...ditemukan];
 
   @override
   void initState() {
@@ -31,14 +31,14 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       if (_controller.text == '') {
         log('hello');
-        data = [...orangHilangDetail];
+        data = [...orangHilangDetail, ...ditemukan];
       } else {
         // String tes = 'Roronoa Zoro';
         // log(tes
         //     .toLowerCase()
         //     .contains(_controller.text.toLowerCase())
         //     .toString());
-        data = [...orangHilangDetail]
+        data = [...orangHilangDetail, ...ditemukan]
             .where((data) => data.namaOrangHilang
                 .toLowerCase()
                 .contains(_controller.text.toLowerCase()))

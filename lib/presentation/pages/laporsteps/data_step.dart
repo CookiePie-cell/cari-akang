@@ -1,4 +1,5 @@
 import 'package:cari_akang/data/gender.dart';
+import 'package:cari_akang/data/models/daerah.dart';
 import 'package:cari_akang/presentation/widgets/labeled_radio.dart';
 import 'package:cari_akang/utils/helper.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -12,27 +13,6 @@ class DataStep extends StatefulWidget {
 }
 
 class _DataStepState extends State<DataStep> {
-  final List<String> provinsi = [
-    'A_Item1',
-    'A_Item2',
-    'A_Item3',
-    'A_Item4',
-    'B_Item1',
-    'B_Item2',
-    'B_Item3',
-    'B_Item4',
-  ];
-  final List<String> kota = [
-    'A_Item1',
-    'A_Item2',
-    'A_Item3',
-    'A_Item4',
-    'B_Item1',
-    'B_Item2',
-    'B_Item3',
-    'B_Item4',
-  ];
-
   String? _selectedProvinsi, _selectedKota, _selectedTahunBulan = 'Tahun';
   Gender? _gender = Gender.laki_laki;
 

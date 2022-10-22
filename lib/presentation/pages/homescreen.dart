@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cari_akang/data/models/arguments.dart';
+import 'package:cari_akang/data/models/daerah.dart';
 import 'package:cari_akang/data/models/orang_hilang.dart';
 import 'package:cari_akang/data/models/orang_hilang_detail.dart';
 import 'package:cari_akang/data/status.dart';
@@ -20,17 +21,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
-  final List<String> items = [
-    'A_Item1',
-    'A_Item2',
-    'A_Item3',
-    'A_Item4',
-    'B_Item1',
-    'B_Item2',
-    'B_Item3',
-    'B_Item4',
-  ];
-
   late TabController _tabController;
   String? selectedValue;
   final TextEditingController textEditingController = TextEditingController();
@@ -153,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.black26),
                               ),
-                              items: items
+                              items: provinsi
                                   .map((item) => DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(
@@ -197,9 +187,9 @@ class _HomeScreenState extends State<HomeScreen>
                               searchMatchFn: (item, searchValue) {
                                 return (item.value
                                     .toString()
-                                    .contains(searchValue));
+                                    .toLowerCase()
+                                    .contains(searchValue.toLowerCase()));
                               },
-                              //This to clear the search value when you close the menu
                               onMenuStateChange: (isOpen) {
                                 if (!isOpen) {
                                   textEditingController.clear();
