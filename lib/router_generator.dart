@@ -8,6 +8,7 @@ import 'package:cari_akang/presentation/pages/loginscreen.dart';
 import 'package:cari_akang/presentation/pages/messagescreen.dart';
 import 'package:cari_akang/presentation/pages/notificationscreen.dart';
 import 'package:cari_akang/presentation/pages/registerscreen.dart';
+import 'package:cari_akang/presentation/pages/searchscreen.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -29,6 +30,11 @@ class RouteGenerator {
       case '/notifications':
         return MaterialPageRoute(
             builder: (_) => NotificationScreen(
+                  isAuthenticated: args as bool,
+                ));
+      case '/search':
+        return MaterialPageRoute(
+            builder: (_) => SearchScreen(
                   isAuthenticated: args as bool,
                 ));
       case '/chat':

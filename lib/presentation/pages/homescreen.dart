@@ -69,20 +69,33 @@ class _HomeScreenState extends State<HomeScreen>
                         fontSize: 34.0,
                         fontWeight: FontWeight.bold),
                   ),
-                  IconButton(
-                      icon: const Icon(
-                        Icons.notifications_none_rounded,
-                      ),
-                      iconSize: 35,
-                      color: Colors.white,
-                      onPressed: () {
-                        widget.isAuthenticated
-                            ? Navigator.pushNamed(context, '/notifications',
-                                arguments: widget.isAuthenticated)
-                            : showDialog<String>(
-                                context: context,
-                                builder: (context) => const MasukAlert());
-                      }),
+                  Row(
+                    children: [
+                      IconButton(
+                          icon: const Icon(
+                            Icons.search,
+                          ),
+                          iconSize: 35,
+                          color: Colors.white,
+                          onPressed: () => Navigator.pushNamed(
+                              context, '/search',
+                              arguments: widget.isAuthenticated)),
+                      IconButton(
+                          icon: const Icon(
+                            Icons.notifications_none_rounded,
+                          ),
+                          iconSize: 35,
+                          color: Colors.white,
+                          onPressed: () {
+                            widget.isAuthenticated
+                                ? Navigator.pushNamed(context, '/notifications',
+                                    arguments: widget.isAuthenticated)
+                                : showDialog<String>(
+                                    context: context,
+                                    builder: (context) => const MasukAlert());
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),

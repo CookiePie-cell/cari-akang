@@ -66,7 +66,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 RoundedButton(
                   buttonName: 'Login',
-                  onButtonPressed: () => Navigator.pushNamed(context, '/home',
+                  onButtonPressed: () => Navigator.popAndPushNamed(
+                      context, '/home',
                       arguments: ScreenArguments(isAuthenticated: true)),
                 ),
                 const SizedBox(

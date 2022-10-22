@@ -154,7 +154,7 @@ class _LaporScreenState extends State<LaporScreen> {
               _currentStep++;
             });
           } else {
-            Navigator.pushNamed(context, '/home',
+            Navigator.popAndPushNamed(context, '/home',
                 arguments:
                     ScreenArguments(isAuthenticated: widget.isAuthenticated));
           }

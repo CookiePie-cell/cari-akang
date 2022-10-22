@@ -16,7 +16,7 @@ class MasukAlert extends StatelessWidget {
           child: const Text('Cancel'),
         ),
         TextButton(
-          onPressed: () => Navigator.pushNamed(context, '/login'),
+          onPressed: () => Navigator.popAndPushNamed(context, '/login'),
           child: const Text('Masuk'),
         ),
       ],

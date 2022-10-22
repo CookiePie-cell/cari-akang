@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 
 class NotificationItem extends StatelessWidget {
   const NotificationItem(
-      {required this.title,
+      {required this.id,
+      required this.title,
       required this.subtitle,
       required this.date,
       required this.isMessage,
       required this.onTap,
       super.key});
 
-  final String title, subtitle, date;
+  final String id, title, subtitle, date;
   final bool isMessage;
   final VoidCallback onTap;
 

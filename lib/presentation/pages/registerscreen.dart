@@ -29,47 +29,12 @@ class CreateNewAccount extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              // SizedBox(
-              //     height: size.width * 0.2,
-              //     ),
-              Stack(
-                children: [
-                  Center(
-                    child: ClipOval(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                        child: CircleAvatar(
-                          radius: size.width * 0.14,
-                          backgroundColor: Colors.grey[400]!.withOpacity(
-                            0.4,
-                          ),
-                          child: Icon(
-                            FontAwesomeIcons.user,
-                            color: Colors.white,
-                            size: size.width * 0.1,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: size.height * 0.08,
-                    left: size.width * 0.56,
-                    child: Container(
-                      height: size.width * 0.1,
-                      width: size.width * 0.1,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 36, 197, 30),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: const Icon(
-                        FontAwesomeIcons.arrowUp,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                ],
+              const Text(
+                'Register',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 60,
+                    fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: size.width * 0.1,

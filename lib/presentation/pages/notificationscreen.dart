@@ -1,5 +1,6 @@
 import 'package:cari_akang/data/models/arguments.dart';
 import 'package:cari_akang/data/models/notification.dart';
+import 'package:cari_akang/data/models/orang_hilang_detail.dart';
 import 'package:cari_akang/presentation/widgets/notification_item.dart';
 import 'package:cari_akang/utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -66,12 +67,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child: ListView.builder(
                   itemCount: notifications.length,
                   itemBuilder: (context, index) => NotificationItem(
+                    id: notifications[index].id,
                     title: notifications[index].title,
                     subtitle: notifications[index].subtitle,
                     date: notifications[index].date,
                     isMessage: false,
                     onTap: () => Navigator.pushNamed(context, '/details',
-                        arguments: widget.isAuthenticated),
+                        arguments: ScreenArguments(
+                            isAuthenticated: widget.isAuthenticated,
+                            detailLaporan: orangHilangDetail
+                                .where((data) =>
+                                    data.id == notifications[index].id)
+                                .toList()[0])),
                   ),
                 )),
             Padding(
@@ -79,6 +86,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child: ListView.builder(
                   itemCount: notifications.length - 1,
                   itemBuilder: (context, index) => NotificationItem(
+                    id: messages[index].id,
                     title: messages[index].title,
                     subtitle: messages[index].subtitle,
                     date: messages[index].date,
