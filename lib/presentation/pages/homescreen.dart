@@ -1,4 +1,9 @@
+import 'dart:developer';
+
+import 'package:cari_akang/data/models/arguments.dart';
 import 'package:cari_akang/data/models/orang_hilang.dart';
+import 'package:cari_akang/data/models/orang_hilang_detail.dart';
+import 'package:cari_akang/data/status.dart';
 import 'package:cari_akang/presentation/widgets/alert_dialog.dart';
 import 'package:cari_akang/presentation/widgets/missing_card.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -199,38 +204,81 @@ class _HomeScreenState extends State<HomeScreen>
                         children: [
                           ListView.builder(
                             padding: EdgeInsets.zero,
-                            itemCount: missings.length,
+                            itemCount: orangHilangDetail.length,
                             itemBuilder: (context, index) {
+                              List<OrangHilang> daftarLaporan =
+                                  orangHilangDetail
+                                      .map((detail) => OrangHilang(
+                                          id: detail.id,
+                                          namaPelapor: detail.namaPelapor,
+                                          nama: detail.namaOrangHilang,
+                                          jenisKelamin: detail.jenisKelamin,
+                                          umur: detail.umur,
+                                          tanggalPosting: detail.tanggalPosting,
+                                          imgUrl: detail.foto,
+                                          statusLaporan: detail.statusLaporan!))
+                                      .toList();
+                              // log(daftarLaporan
+                              //     .where((laporan) => laporan.id == '1')
+                              //     .toList()[0]
+                              //     .toString());
                               return MissingCard(
-                                id: missings[index].id,
-                                nama: missings[index].nama,
-                                namaPelapor: missings[index].namaPelapor,
-                                umur: missings[index].umur!,
-                                jenisKelamin: missings[index].jenisKelamin,
+                                id: daftarLaporan[index].id,
+                                nama: daftarLaporan[index].nama,
+                                namaPelapor: daftarLaporan[index].namaPelapor,
+                                umur: daftarLaporan[index].umur,
+                                jenisKelamin: daftarLaporan[index].jenisKelamin,
                                 onTap: () => Navigator.pushNamed(
                                     context, '/details',
-                                    arguments: widget.isAuthenticated),
-                                imgURL: missings[index].imgUrl,
-                                tanggalPosting: missings[index].tanggalPosting,
-                                statusLaporan: missings[index].statusLaporan,
+                                    arguments: ScreenArguments(
+                                        isAuthenticated: widget.isAuthenticated,
+                                        detailLaporan: orangHilangDetail
+                                            .where((data) =>
+                                                data.id ==
+                                                daftarLaporan[index].id)
+                                            .toList()[0])),
+                                imgURL: daftarLaporan[index].imgUrl,
+                                tanggalPosting:
+                                    daftarLaporan[index].tanggalPosting,
+                                statusLaporan:
+                                    daftarLaporan[index].statusLaporan,
                               );
                             },
                           ),
                           ListView.builder(
                             itemCount: found.length,
                             itemBuilder: (context, index) {
+                              List<OrangHilang> daftarLaporan = ditemukan
+                                  .map((detail) => OrangHilang(
+                                      id: detail.id,
+                                      namaPelapor: detail.namaPelapor,
+                                      nama: detail.namaOrangHilang,
+                                      jenisKelamin: detail.jenisKelamin,
+                                      umur: detail.umur,
+                                      tanggalPosting: detail.tanggalPosting,
+                                      imgUrl: detail.foto,
+                                      statusLaporan: detail.statusLaporan!))
+                                  .toList();
                               return MissingCard(
-                                id: found[index].id,
-                                nama: found[index].nama,
-                                namaPelapor: found[index].namaPelapor,
-                                umur: found[index].umur!,
-                                jenisKelamin: found[index].jenisKelamin,
+                                id: daftarLaporan[index].id,
+                                nama: daftarLaporan[index].nama,
+                                namaPelapor: daftarLaporan[index].namaPelapor,
+                                umur: daftarLaporan[index].umur!,
+                                jenisKelamin: daftarLaporan[index].jenisKelamin,
                                 onTap: () => Navigator.pushNamed(
                                     context, '/details',
-                                    arguments: widget.isAuthenticated),
-                                imgURL: found[index].imgUrl,
-                                tanggalPosting: found[index].tanggalPosting,
-                                statusLaporan: found[index].statusLaporan,
+                                    arguments: ScreenArguments(
+                                        isAuthenticated: widget.isAuthenticated,
+                                        detailLaporan: ditemukan
+                                            .where((data) =>
+                                                data.id ==
+                                                daftarLaporan[index].id)
+                                            .toList()[0])),
+                                imgURL: daftarLaporan[index].imgUrl,
+                                tanggalPosting:
+                                    daftarLaporan[index].tanggalPosting,
+                                statusLaporan:
+                                    daftarLaporan[index].statusLaporan,
                               );
                             },
                           ),

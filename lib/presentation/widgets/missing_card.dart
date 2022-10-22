@@ -21,7 +21,7 @@ class MissingCard extends StatelessWidget {
 
   final VoidCallback onTap;
   final String id, nama, namaPelapor, imgURL, tanggalPosting;
-  final int umur;
+  final int? umur;
   final Gender jenisKelamin;
   final String? alamat, keterangan;
   final StatusLaporan? statusLaporan;

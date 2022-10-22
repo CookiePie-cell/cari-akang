@@ -60,6 +60,7 @@ class _LaporScreenState extends State<LaporScreen> {
       Future.delayed(
           const Duration(milliseconds: 0),
           () => showDialog(
+              barrierDismissible: false,
               context: context,
               builder: (context) => MasukAlert(
                     onCancelPressed: () => Navigator.pushNamed(context, '/home',

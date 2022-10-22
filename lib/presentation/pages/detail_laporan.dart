@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cari_akang/data/models/arguments.dart';
+import 'package:cari_akang/data/models/orang_hilang_detail.dart';
 import 'package:cari_akang/presentation/pages/detailsteps/detail_ciriciri_step.dart';
 import 'package:cari_akang/presentation/pages/detailsteps/detail_data_step.dart';
 import 'package:cari_akang/presentation/pages/detailsteps/detail_keterangan_step.dart';
@@ -10,10 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailLaporanScreen extends StatefulWidget {
-  const DetailLaporanScreen({required this.isAuthenticated, Key? key})
+  const DetailLaporanScreen(
+      {required this.isAuthenticated, required this.detailLaporan, Key? key})
       : super(key: key);
 
   final bool isAuthenticated;
+  final OrangHilangDetail detailLaporan;
   @override
   State<DetailLaporanScreen> createState() => _DetailLaporanScreenState();
 }
@@ -41,7 +44,13 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
             ),
             state: _currentStep > 0 ? StepState.complete : StepState.editing,
             isActive: _currentStep >= 0,
-            content: const DetailDataStep()),
+            content: DetailDataStep(
+              namaPelapor: widget.detailLaporan.namaPelapor,
+              namaOrangHilang: widget.detailLaporan.namaOrangHilang,
+              jenisKelamin: widget.detailLaporan.jenisKelamin,
+              umur: widget.detailLaporan.umur,
+              alamat: widget.detailLaporan.alamat,
+            )),
         Step(
             title: Text(
               'Ciri-ciri',
@@ -51,7 +60,14 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
             ),
             state: _currentStep > 0 ? StepState.complete : StepState.editing,
             isActive: _currentStep > 0,
-            content: const DetailCiriCiriStep()),
+            content: DetailCiriCiriStep(
+              warnaKulit: widget.detailLaporan.warnaKulit,
+              jenisRambut: widget.detailLaporan.jenisRambut,
+              tinggiBadan: widget.detailLaporan.tinggiBadan,
+              beratBadan: widget.detailLaporan.beratBadan,
+              warnaRambut: widget.detailLaporan.warnaRambut,
+              lainnya: widget.detailLaporan.lainnya,
+            )),
         Step(
             title: Text(
               'Keterangan',
@@ -61,13 +77,17 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
             ),
             state: _currentStep > 1 ? StepState.complete : StepState.editing,
             isActive: _currentStep > 1,
-            content: const DetailKeteranganStep()),
+            content: DetailKeteranganStep(
+              kontak: widget.detailLaporan.kontak,
+              keterangan: widget.detailLaporan.keterangan,
+            )),
       ];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    log(widget.detailLaporan.namaOrangHilang);
   }
 
   @override
@@ -182,10 +202,10 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
                             height: 200.0,
                             child: Container(
                               width: 150.0,
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/Komik-One-Piece-small.png'),
+                                  image:
+                                      NetworkImage(widget.detailLaporan.foto),
                                   fit: BoxFit.cover,
                                   alignment: Alignment.topCenter,
                                 ),
@@ -213,7 +233,7 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen>
                               ),
                               IconButton(
                                 onPressed: () async {
-                                  const noHp = '081234567891';
+                                  String noHp = widget.detailLaporan.kontak;
                                   final url = Uri.parse('tel:$noHp');
 
                                   if (await canLaunchUrl(url)) {

@@ -1,4 +1,6 @@
 import 'package:cari_akang/data/models/arguments.dart';
+import 'package:cari_akang/data/models/orang_hilang.dart';
+import 'package:cari_akang/data/models/orang_hilang_detail.dart';
 import 'package:cari_akang/navigation.dart';
 import 'package:cari_akang/presentation/pages/lupa_password.dart';
 import 'package:cari_akang/presentation/pages/detail_laporan.dart';
@@ -20,7 +22,10 @@ class RouteGenerator {
                 ));
       case '/details':
         return MaterialPageRoute(
-            builder: (_) => DetailLaporanScreen(isAuthenticated: args as bool));
+            builder: (_) => DetailLaporanScreen(
+                  isAuthenticated: (args as ScreenArguments).isAuthenticated!,
+                  detailLaporan: (args as ScreenArguments).detailLaporan!,
+                ));
       case '/notifications':
         return MaterialPageRoute(
             builder: (_) => NotificationScreen(
